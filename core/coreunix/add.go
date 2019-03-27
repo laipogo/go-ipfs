@@ -105,7 +105,11 @@ func (adder *Adder) add(reader io.Reader) (ipld.Node, error) {
 	}
 
 	// Make sure all added nodes are written when done.
-	defer adder.bufferedDS.Commit()
+	defer func() {
+		if err == nil {
+			err = adder.bufferedDS.Commit()
+		}
+	}()
 
 	params := ihelper.DagBuilderParams{
 		Dagserv:    adder.bufferedDS,
