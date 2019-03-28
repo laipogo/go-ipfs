@@ -98,7 +98,7 @@ func (adder *Adder) SetMfsRoot(r *mfs.Root) {
 }
 
 // Constructs a node from reader's data, and adds it. Doesn't pin.
-func (adder *Adder) add(reader io.Reader) (ipld.Node, error) {
+func (adder *Adder) add(reader io.Reader) (nd ipld.Node, err error) {
 	chnk, err := chunker.FromString(reader, adder.Chunker)
 	if err != nil {
 		return nil, err
